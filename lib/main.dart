@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:gap/gap.dart';
 
 void main() {
   runApp(const MyApp());
@@ -74,12 +75,16 @@ class MyHomePage extends StatelessWidget {
                   ],
                 ),
                 Expanded(
-                  child: Container(), // expanded, spacerを使うとエラー出る
+                  child: Container(), // spacerでもいい
                 ),
-                const ElevatedButton(
-                    onPressed:
-                        null /*() => showModalBottomSheet(context: null, builder: null) */,
-                    child: Text('+ New Task')),
+                ElevatedButton(
+                    onPressed: () => showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return _ModalWindow();
+                        }),
+                    child: const Text('+ New Task')),
               ],
             ),
           ]),
@@ -118,6 +123,55 @@ class _GetWeekday extends StatelessWidget {
       style: const TextStyle(
         color: Colors.grey,
         fontSize: 12,
+      ),
+    );
+  }
+}
+
+class _ModalWindow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      height: MediaQuery.of(context).size.height * 0.8,
+      child: const Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                'New Task Todo',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            Divider(
+              thickness: 1.2,
+            ),
+            Text(
+              'Title Task',
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
+            Gap(5),
+            TextField(
+              decoration: InputDecoration(
+                  hintText: ' Add Task Name',
+                  fillColor: Color.fromARGB(
+                      100, 190, 190, 190), //colors.grey.shade200とかどう使うん
+                  filled: true,
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.calendar_month)),
+            ),
+          ],
+        ),
       ),
     );
   }
