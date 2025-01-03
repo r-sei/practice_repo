@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,33 +13,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +31,9 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         centerTitle: false,
         backgroundColor: Colors.white,
-        title: Column(
+        title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text("Hello I'm",
                 style: TextStyle(
                   color: Colors.grey,
@@ -61,43 +47,77 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         // const Text("Hello I'm"),
-        leading: _ProfileIcon(),
-        actions: [
+        leading: const _ProfileIcon(),
+        actions: const [
           IconButton(onPressed: null, icon: Icon(Icons.calendar_month)),
-          IconButton(
-              onPressed: null, icon: const Icon(Icons.notifications_none))
+          IconButton(onPressed: null, icon: Icon(Icons.notifications_none))
         ],
       ),
-
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(children: [
+            Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Today's Task",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    _GetWeekday(),
+                  ],
+                ),
+                Expanded(
+                  child: Container(), // expanded, spacerを使うとエラー出る
+                ),
+                const ElevatedButton(
+                    onPressed:
+                        null /*() => showModalBottomSheet(context: null, builder: null) */,
+                    child: Text('+ New Task')),
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+          ]),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
 
-  Widget _ProfileIcon() {
-    return IconButton(
+class _ProfileIcon extends StatelessWidget {
+  const _ProfileIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return const IconButton(
       onPressed: null,
       icon: CircleAvatar(
-        backgroundColor: const Color.fromRGBO(247, 236, 21, 1),
-        child: Image.asset('assets/profile.png'),
+        backgroundColor: Color.fromRGBO(247, 236, 21, 1),
+        foregroundImage: AssetImage('assets/profile.png'),
         radius: 30.0,
+      ),
+    );
+  }
+}
+
+class _GetWeekday extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    initializeDateFormatting('en_US');
+    DateTime now = DateTime.now();
+    String week = DateFormat('EEEE', 'en_US').format(now);
+    String month = DateFormat('MMMM', 'en_US').format(now);
+
+    return Text(
+      '$week, ${now.day} $month,',
+      style: const TextStyle(
+        color: Colors.grey,
+        fontSize: 12,
       ),
     );
   }
