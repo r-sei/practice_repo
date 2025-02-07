@@ -50,7 +50,7 @@ class TodoModalState extends State<TodoModal> {
             TextField(
               decoration: InputDecoration(
                   hintText: ' Add Task Name',
-                  hintStyle: TextStyle(color: Colors.grey.shade200),
+                  hintStyle: const TextStyle(color: Colors.grey),
                   fillColor: const Color.fromARGB(
                       100, 190, 190, 190), //colors.grey.shade200とかどう使うん
                   filled: true,
@@ -173,40 +173,85 @@ class TodoModalState extends State<TodoModal> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Column(children: [
-                  const Text(
-                    'Date',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: const Text(
+                      'Date',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () async {
-                            // print("start");
-                            final date = await showDatePicker(
-                                context: context,
-                                firstDate: DateTime(2020),
-                                lastDate: DateTime(2030));
-                            // print("finished: $date");
-                            if (date != null) {
-                              setState(() {
-                                selectedDate = date;
-                              });
-                            }
-                          },
-                          icon: const Icon(Icons.calendar_month)),
-                      Text(selectedDate != null
-                          ? "${selectedDate?.year}/${selectedDate?.month}/${selectedDate?.day}"
-                          : "yyyy/mm/dd"),
-                    ],
+                  Container(
+                    width: MediaQuery.of(context).size.width / 3,
+                    color: const Color.fromARGB(100, 190, 190, 190),
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              // print("start");
+                              final date = await showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(2020),
+                                  lastDate: DateTime(2030));
+                              // print("finished: $date");
+                              if (date != null) {
+                                setState(() {
+                                  selectedDate = date;
+                                });
+                              }
+                            },
+                            icon: const Icon(Icons.calendar_month)),
+                        Text(selectedDate != null
+                            ? "${selectedDate?.year}/${selectedDate?.month}/${selectedDate?.day}"
+                            : "yyyy/mm/dd"),
+                      ],
+                    ),
                   ),
                 ]),
-                //ここにも上と同じcolumnをコピーして、時間選択
+                Gap(MediaQuery.of(context).size.width / 12),
+                Column(children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: const Text(
+                      'Time',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 3,
+                    color: const Color.fromARGB(100, 190, 190, 190),
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              // print("start");
+                              final date = await showDatePicker(
+                                  context: context,
+                                  firstDate: DateTime(2020),
+                                  lastDate: DateTime(2030));
+                              // print("finished: $date");
+                              if (date != null) {
+                                setState(() {
+                                  selectedDate = date;
+                                });
+                              }
+                            },
+                            icon: const Icon(Icons.calendar_month)),
+                        Text(selectedDate != null
+                            ? "${selectedDate?.year}/${selectedDate?.month}/${selectedDate?.day}"
+                            : "yyyy/mm/dd"),
+                      ],
+                    ),
+                  ),
+                ]),
               ],
             ),
           ],
