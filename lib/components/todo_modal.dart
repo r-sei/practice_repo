@@ -8,6 +8,7 @@ enum RadioValue { LRN, WRK, GEN }
 
 RadioValue? selectedValue;
 DateTime? selectedDate;
+TimeOfDay? selectedTime = TimeOfDay.now();
 
 class TodoModal extends StatefulWidget {
   @override
@@ -186,6 +187,7 @@ class TodoModalState extends State<TodoModal> {
                       ),
                     ),
                   ),
+                  //ここからdate入力フォーム
                   Container(
                     width: MediaQuery.of(context).size.width / 3,
                     color: const Color.fromARGB(100, 190, 190, 190),
@@ -213,7 +215,9 @@ class TodoModalState extends State<TodoModal> {
                     ),
                   ),
                 ]),
+                //ここまでDate入力フォーム
                 Gap(MediaQuery.of(context).size.width / 12),
+                //ここからTime入力フォーム
                 Column(children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 3,
@@ -233,21 +237,23 @@ class TodoModalState extends State<TodoModal> {
                         IconButton(
                             onPressed: () async {
                               // print("start");
-                              final date = await showDatePicker(
+                              final timeData = await showTimePicker(
+                                  initialEntryMode: TimePickerEntryMode.dial,
                                   context: context,
-                                  firstDate: DateTime(2020),
-                                  lastDate: DateTime(2030));
+                                  initialTime: selectedTime != null
+                                      ? selectedTime!
+                                      : TimeOfDay.now());
                               // print("finished: $date");
-                              if (date != null) {
+                              if (timeData != null) {
                                 setState(() {
-                                  selectedDate = date;
+                                  selectedTime = timeData;
                                 });
                               }
                             },
-                            icon: const Icon(Icons.calendar_month)),
-                        Text(selectedDate != null
-                            ? "${selectedDate?.year}/${selectedDate?.month}/${selectedDate?.day}"
-                            : "yyyy/mm/dd"),
+                            icon: const Icon(Icons.access_time)),
+                        Text(selectedTime != null
+                            ? "${selectedTime?.hour}:${selectedTime?.minute}"
+                            : "hh:mm"),
                       ],
                     ),
                   ),

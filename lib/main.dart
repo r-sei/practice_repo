@@ -25,9 +25,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+bool isChecked = false;
+
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +96,96 @@ class MyHomePage extends StatelessWidget {
                     child: const Text('+ New Task')),
               ],
             ),
+            const Gap(30),
+            Container(
+              width: double.infinity,
+              height: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+
+              //なんか適当に調整
+              child: Row(
+                children: [
+                  Container(
+                    width: 30,
+                    decoration: const BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          topLeft: Radius.circular(20)),
+                    ),
+                  ),
+                  Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Column(
+                            children: [
+                              Text(
+                                'Learning Web Developer',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                'Learning topic HTML and CSS',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                          // const Expanded(child: Spacer()),
+                          Checkbox(
+                              value: isChecked,
+                              shape: const CircleBorder(),
+                              onChanged: (value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              }),
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 1.5,
+                      color: Colors.grey,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Today",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                        Gap(15),
+                        Text(
+                          '09:15PM- 11:45PM',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        )
+                      ],
+                    )
+                  ]),
+                ],
+              ),
+            )
           ]),
         ),
       ),
