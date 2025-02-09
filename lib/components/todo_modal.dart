@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/components/date_form.dart';
+import 'package:flutter_practice/components/decision_button.dart';
+import 'package:flutter_practice/components/radio_button.dart';
+import 'package:flutter_practice/components/time_form.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:gap/gap.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-enum RadioValue { LRN, WRK, GEN }
+enum TodoType {
+  learn('LRN', Color.fromARGB(255, 65, 215, 23)),
+  work('WRK', Color.fromARGB(255, 23, 161, 215)),
+  general('GEN', Color.fromARGB(255, 255, 179, 0));
 
-RadioValue? selectedValue;
-DateTime? selectedDate;
-TimeOfDay? selectedTime = TimeOfDay.now();
+  const TodoType(this.label, this.color);
+
+  final String label;
+  final Color color;
+}
 
 class TodoModal extends StatefulWidget {
   @override
@@ -16,6 +25,7 @@ class TodoModal extends StatefulWidget {
 }
 
 class TodoModalState extends State<TodoModal> {
+  TodoType? selectedType;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,7 +57,7 @@ class TodoModalState extends State<TodoModal> {
                 fontSize: 15,
               ),
             ),
-            const Gap(5),
+            const Gap(8),
             TextField(
               decoration: InputDecoration(
                   hintText: ' Add Task Name',
@@ -94,223 +104,34 @@ class TodoModalState extends State<TodoModal> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Radio(
-                          value: RadioValue.LRN,
-                          groupValue: selectedValue,
-                          onChanged: (RadioValue? val) {
-                            setState(() {
-                              selectedValue = val;
-                            });
-                          },
-                          fillColor: WidgetStateProperty.resolveWith<Color>(
-                              (Set<WidgetState> states) {
-                            if (states.contains(WidgetState.disabled)) {
-                              return const Color.fromARGB(255, 65, 215, 23);
-                            }
-                            return const Color.fromARGB(255, 65, 215, 23);
-                          })),
-                      const Text("LRN",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 65, 215, 23),
-                            fontSize: 12.0,
-                          )),
-                      const Gap(50),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Radio(
-                          value: RadioValue.WRK,
-                          groupValue: selectedValue,
-                          onChanged: (RadioValue? val) {
-                            setState(() {
-                              selectedValue = val;
-                            });
-                          },
-                          fillColor: WidgetStateProperty.resolveWith<Color>(
-                              (Set<WidgetState> states) {
-                            if (states.contains(WidgetState.disabled)) {
-                              return const Color.fromARGB(255, 23, 161, 215);
-                            }
-                            return const Color.fromARGB(255, 23, 161, 215);
-                          })),
-                      const Text("WRK",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 23, 161, 215),
-                            fontSize: 12.0,
-                          )),
-                      const Gap(50),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Radio(
-                          value: RadioValue.GEN,
-                          groupValue: selectedValue,
-                          onChanged: (RadioValue? val) {
-                            setState(() {
-                              selectedValue = val;
-                            });
-                          },
-                          fillColor: WidgetStateProperty.resolveWith<Color>(
-                              (Set<WidgetState> states) {
-                            if (states.contains(WidgetState.disabled)) {
-                              return const Color.fromARGB(255, 255, 179, 0);
-                            }
-                            return const Color.fromARGB(255, 255, 179, 0);
-                          })),
-                      const Text("GEN",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 255, 179, 0),
-                            fontSize: 12.0,
-                          )),
-                      const Gap(50),
-                    ],
-                  ),
+                  for (final type in TodoType.values) ...{
+                    Expanded(
+                        child: RadioButton(
+                            todoType: type,
+                            selectedType: selectedType,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedType = value;
+                              });
+                            })),
+                    // Text('繰り返し表示'),
+                  }
                 ],
               ),
             ),
             const Gap(20),
-            Row(
+            const Row(
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 3,
-                      child: const Text(
-                        'Date',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                    //ここからdate入力フォーム
-                    Container(
-                      width: MediaQuery.of(context).size.width / 3,
-                      color: const Color.fromARGB(100, 190, 190, 190),
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () async {
-                                // print("start");
-                                final date = await showDatePicker(
-                                    context: context,
-                                    firstDate: DateTime(2020),
-                                    lastDate: DateTime(2030));
-                                // print("finished: $date");
-                                if (date != null) {
-                                  setState(() {
-                                    selectedDate = date;
-                                  });
-                                }
-                              },
-                              icon: const Icon(Icons.calendar_month)),
-                          Text(selectedDate != null
-                              ? "${selectedDate?.year}/${selectedDate?.month}/${selectedDate?.day}"
-                              : "yyyy/mm/dd"),
-                        ],
-                      ),
-                    ),
-                  ]),
-                ),
+                Expanded(child: DateForm()),
                 //ここまでDate入力フォーム
-                const Gap(20),
+                Gap(20),
                 //ここからTime入力フォーム
-                Expanded(
-                  child: Column(children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 3,
-                      child: const Text(
-                        'Time',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 3,
-                      color: const Color.fromARGB(100, 190, 190, 190),
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () async {
-                                // print("start");
-                                final timeData = await showTimePicker(
-                                    initialEntryMode: TimePickerEntryMode.dial,
-                                    context: context,
-                                    initialTime: selectedTime != null
-                                        ? selectedTime!
-                                        : TimeOfDay.now());
-                                // print("finished: $date");
-                                if (timeData != null) {
-                                  setState(() {
-                                    selectedTime = timeData;
-                                  });
-                                }
-                              },
-                              icon: const Icon(Icons.access_time)),
-                          Text(selectedTime != null
-                              ? "${selectedTime?.hour}:${selectedTime?.minute}"
-                              : "hh:mm"),
-                        ],
-                      ),
-                    ),
-                  ]),
-                ),
+                Expanded(child: TimeForm()),
               ],
             ),
             const Gap(20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      side: const BorderSide(
-                        color: Colors.blue,
-                        width: 1,
-                      ),
-                    ),
-                    child: const Text(
-                      'cancel',
-                      style: TextStyle(color: Colors.blue, fontSize: 15),
-                    ),
-                  ),
-                ),
-                const Gap(20),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      side: const BorderSide(
-                        color: Colors.blue,
-                        width: 1,
-                      ),
-                    ),
-                    child: const Text(
-                      'create',
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
-                  ),
-                ),
-              ],
-            )
+            const DecisionButton(),
           ],
         ),
       ),
