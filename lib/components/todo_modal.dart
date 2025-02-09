@@ -52,15 +52,15 @@ class TodoModalState extends State<TodoModal> {
               decoration: InputDecoration(
                   hintText: ' Add Task Name',
                   hintStyle: const TextStyle(color: Colors.grey),
-                  fillColor: const Color.fromARGB(
-                      100, 190, 190, 190), //colors.grey.shade200とかどう使うん
+                  fillColor: const Color.fromARGB(100, 190, 190,
+                      190), //colors.grey.shade200とかどう使うん(const外せば解決)
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20), //角丸と枠なしの両立方法がわからん
                   ),
                   prefixIcon: const Icon(Icons.calendar_month)),
             ),
-            const Gap(5),
+            const Gap(20),
             const Text(
               'Description',
               textAlign: TextAlign.start,
@@ -75,13 +75,12 @@ class TodoModalState extends State<TodoModal> {
               decoration: InputDecoration(
                 hintText: ' Add Description',
                 hintStyle: TextStyle(color: Colors.grey),
-                fillColor: Color.fromARGB(
-                    100, 190, 190, 190), //colors.grey.shade200とかどう使うん
+                fillColor: Color.fromARGB(100, 190, 190, 190),
                 filled: true,
                 border: InputBorder.none,
               ),
             ),
-            const Gap(5),
+            const Gap(20),
             const Text(
               'Category',
               textAlign: TextAlign.start,
@@ -173,93 +172,145 @@ class TodoModalState extends State<TodoModal> {
                 ],
               ),
             ),
+            const Gap(20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Column(children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 3,
-                    child: const Text(
-                      'Date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                Expanded(
+                  child: Column(children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: const Text(
+                        'Date',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
-                  ),
-                  //ここからdate入力フォーム
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    color: const Color.fromARGB(100, 190, 190, 190),
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: () async {
-                              // print("start");
-                              final date = await showDatePicker(
-                                  context: context,
-                                  firstDate: DateTime(2020),
-                                  lastDate: DateTime(2030));
-                              // print("finished: $date");
-                              if (date != null) {
-                                setState(() {
-                                  selectedDate = date;
-                                });
-                              }
-                            },
-                            icon: const Icon(Icons.calendar_month)),
-                        Text(selectedDate != null
-                            ? "${selectedDate?.year}/${selectedDate?.month}/${selectedDate?.day}"
-                            : "yyyy/mm/dd"),
-                      ],
+                    //ここからdate入力フォーム
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      color: const Color.fromARGB(100, 190, 190, 190),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () async {
+                                // print("start");
+                                final date = await showDatePicker(
+                                    context: context,
+                                    firstDate: DateTime(2020),
+                                    lastDate: DateTime(2030));
+                                // print("finished: $date");
+                                if (date != null) {
+                                  setState(() {
+                                    selectedDate = date;
+                                  });
+                                }
+                              },
+                              icon: const Icon(Icons.calendar_month)),
+                          Text(selectedDate != null
+                              ? "${selectedDate?.year}/${selectedDate?.month}/${selectedDate?.day}"
+                              : "yyyy/mm/dd"),
+                        ],
+                      ),
                     ),
-                  ),
-                ]),
+                  ]),
+                ),
                 //ここまでDate入力フォーム
-                Gap(MediaQuery.of(context).size.width / 12),
+                const Gap(20),
                 //ここからTime入力フォーム
-                Column(children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 3,
-                    child: const Text(
-                      'Time',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                Expanded(
+                  child: Column(children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: const Text(
+                        'Time',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    color: const Color.fromARGB(100, 190, 190, 190),
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: () async {
-                              // print("start");
-                              final timeData = await showTimePicker(
-                                  initialEntryMode: TimePickerEntryMode.dial,
-                                  context: context,
-                                  initialTime: selectedTime != null
-                                      ? selectedTime!
-                                      : TimeOfDay.now());
-                              // print("finished: $date");
-                              if (timeData != null) {
-                                setState(() {
-                                  selectedTime = timeData;
-                                });
-                              }
-                            },
-                            icon: const Icon(Icons.access_time)),
-                        Text(selectedTime != null
-                            ? "${selectedTime?.hour}:${selectedTime?.minute}"
-                            : "hh:mm"),
-                      ],
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      color: const Color.fromARGB(100, 190, 190, 190),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () async {
+                                // print("start");
+                                final timeData = await showTimePicker(
+                                    initialEntryMode: TimePickerEntryMode.dial,
+                                    context: context,
+                                    initialTime: selectedTime != null
+                                        ? selectedTime!
+                                        : TimeOfDay.now());
+                                // print("finished: $date");
+                                if (timeData != null) {
+                                  setState(() {
+                                    selectedTime = timeData;
+                                  });
+                                }
+                              },
+                              icon: const Icon(Icons.access_time)),
+                          Text(selectedTime != null
+                              ? "${selectedTime?.hour}:${selectedTime?.minute}"
+                              : "hh:mm"),
+                        ],
+                      ),
                     ),
-                  ),
-                ]),
+                  ]),
+                ),
               ],
             ),
+            const Gap(20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      side: const BorderSide(
+                        color: Colors.blue,
+                        width: 1,
+                      ),
+                    ),
+                    child: const Text(
+                      'cancel',
+                      style: TextStyle(color: Colors.blue, fontSize: 15),
+                    ),
+                  ),
+                ),
+                const Gap(20),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      side: const BorderSide(
+                        color: Colors.blue,
+                        width: 1,
+                      ),
+                    ),
+                    child: const Text(
+                      'create',
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
