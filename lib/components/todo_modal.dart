@@ -3,10 +3,7 @@ import 'package:flutter_practice/components/date_form.dart';
 import 'package:flutter_practice/components/decision_button.dart';
 import 'package:flutter_practice/components/radio_button.dart';
 import 'package:flutter_practice/components/time_form.dart';
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:gap/gap.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 enum TodoType {
   learn('LRN', Color.fromARGB(255, 65, 215, 23)),
