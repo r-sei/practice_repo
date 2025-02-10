@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/components/todo_modal.dart';
 import 'package:flutter_practice/components/todo_tile.dart';
 import 'package:flutter_practice/firebase_options.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:gap/gap.dart';
@@ -12,7 +13,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
