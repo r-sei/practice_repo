@@ -45,15 +45,18 @@ class DecisionButton extends ConsumerWidget {
         Expanded(
           child: ElevatedButton(
             onPressed: () {
-              final getRadioValue = ref.read(radioProvider);
-              String category = '';
+              //=============================================ここから=============================================================================
+              final categoryLabel = ref.read(radioProvider).label;
 
-              switch (getRadioValue) {
-                case 1:
+              String category = '';
+              switch (categoryLabel) {
+                case 'LRN':
                   category = 'Learning';
-                case 2:
+                  break;
+                case 'WRK':
                   category = 'Working';
-                case 3:
+                  break;
+                case 'GEN':
                   category = 'General';
                   break;
               }
@@ -65,11 +68,9 @@ class DecisionButton extends ConsumerWidget {
                   dateTask: ref.read(dateProvider),
                   timeTask: ref.read(timeProvider)));
 
-              print(
-                  'Title: ${titleController.text}, Description: ${descriptionController.text},' /*Category: ${selectedType.label}, Date: $dateTask, Time: $timeTask'*/);
               print('Data is saving');
               print(
-                  '${titleController.text}   ${titleController.text}     $category     ${ref.read(dateProvider)}      ${ref.read(timeProvider)}');
+                  '${titleController.text}   ${descriptionController.text}     $category     ${ref.read(dateProvider)}      ${ref.read(timeProvider)}');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,

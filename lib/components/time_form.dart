@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/provider/date_time_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TimeForm extends StatefulWidget {
+class TimeForm extends ConsumerWidget {
   const TimeForm({super.key});
 
   @override
-  State<TimeForm> createState() => _TimeFormState();
-}
-
-class _TimeFormState extends State<TimeForm> {
-  TimeOfDay? selectedTime = TimeOfDay.now();
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final time = ref.watch(timeProvider);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const SizedBox(
         child: Text(
@@ -31,20 +28,18 @@ class _TimeFormState extends State<TimeForm> {
                   final timeData = await showTimePicker(
                       initialEntryMode: TimePickerEntryMode.dial,
                       context: context,
-                      initialTime: selectedTime != null
-                          ? selectedTime!
-                          : TimeOfDay.now());
+                      initialTime: TimeOfDay.now());
                   // print("finished: $date");
                   if (timeData != null) {
-                    setState(() {
-                      selectedTime = timeData;
-                    });
+                    if (!context.mounted) {
+                      return;
+                    }
+                    String timeString = timeData.format(context);
+                    ref.read(timeProvider.notifier).update((_) => timeString);
                   }
                 },
                 icon: const Icon(Icons.access_time)),
-            Text(selectedTime != null
-                ? "${selectedTime?.hour}:${selectedTime?.minute}"
-                : "hh:mm"),
+            Text(time),
           ],
         ),
       ),

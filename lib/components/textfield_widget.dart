@@ -15,7 +15,7 @@ class TextfieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      // controller: txtController,
+      controller: txtController,
       keyboardType: TextInputType.multiline,
       maxLines: maxLine,
       decoration: InputDecoration(
