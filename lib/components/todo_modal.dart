@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/components/date_form.dart';
 import 'package:flutter_practice/components/decision_button.dart';
 import 'package:flutter_practice/components/radio_button.dart';
+import 'package:flutter_practice/components/textfield_widget.dart';
 import 'package:flutter_practice/components/time_form.dart';
 import 'package:gap/gap.dart';
 
@@ -17,12 +18,18 @@ enum TodoType {
 }
 
 class TodoModal extends StatefulWidget {
+  const TodoModal({super.key});
+
   @override
   State<TodoModal> createState() => TodoModalState();
 }
 
 class TodoModalState extends State<TodoModal> {
   TodoType? selectedType;
+
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,18 +62,10 @@ class TodoModalState extends State<TodoModal> {
               ),
             ),
             const Gap(8),
-            TextField(
-              decoration: InputDecoration(
-                  hintText: ' Add Task Name',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  fillColor: const Color.fromARGB(100, 190, 190,
-                      190), //colors.grey.shade200とかどう使うん(const外せば解決)
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20), //角丸と枠なしの両立方法がわからん
-                  ),
-                  prefixIcon: const Icon(Icons.calendar_month)),
-            ),
+            TextfieldWidget(
+                hintText: 'Add Task Name',
+                maxLine: 1,
+                txtController: titleController),
             const Gap(20),
             const Text(
               'Description',
@@ -76,17 +75,10 @@ class TodoModalState extends State<TodoModal> {
                 fontSize: 15,
               ),
             ),
-            const TextField(
-              keyboardType: TextInputType.multiline,
-              maxLines: 5,
-              decoration: InputDecoration(
-                hintText: ' Add Description',
-                hintStyle: TextStyle(color: Colors.grey),
-                fillColor: Color.fromARGB(100, 190, 190, 190),
-                filled: true,
-                border: InputBorder.none,
-              ),
-            ),
+            TextfieldWidget(
+                hintText: 'Add Description',
+                maxLine: 5,
+                txtController: descriptionController),
             const Gap(20),
             const Text(
               'Category',
@@ -118,17 +110,16 @@ class TodoModalState extends State<TodoModal> {
             ),
             const Gap(20),
             const Row(
-              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(child: DateForm()),
-                //ここまでDate入力フォーム
                 Gap(20),
-                //ここからTime入力フォーム
                 Expanded(child: TimeForm()),
               ],
             ),
             const Gap(20),
-            const DecisionButton(),
+            DecisionButton(
+                titleController: titleController,
+                descriptionController: descriptionController),
           ],
         ),
       ),
