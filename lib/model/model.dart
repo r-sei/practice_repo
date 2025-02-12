@@ -42,7 +42,6 @@ class TodoModel {
 
   factory TodoModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> doc) {
     return TodoModel(
-        docID: doc.id,
         titleTask: doc['taskTitle'],
         description: doc['description'],
         category: doc['category'],

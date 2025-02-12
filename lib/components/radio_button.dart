@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/components/todo_modal.dart';
+import 'package:flutter_practice/provider/radio_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RadioButton extends ConsumerWidget {
@@ -19,12 +20,13 @@ class RadioButton extends ConsumerWidget {
     return RadioListTile(
       value: todoType,
       groupValue: selectedType,
-      onChanged: onChanged,
-      // (value) {
-      //   if (value != null) {
-      //     ref.read(radioProvider.notifier).state = value;
-      //   }
-      // },
+      onChanged: (value) {
+        //ここにradioProviderを更新する式がいる
+        if (value != null) {
+          ref.read(radioProvider.notifier).update((_) => value);
+          onChanged(value); //これが必要な理由がわからん
+        }
+      },
       fillColor: WidgetStateProperty.all(todoType.color),
       title: Text(todoType.label,
           style: TextStyle(

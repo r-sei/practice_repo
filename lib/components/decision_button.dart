@@ -71,6 +71,10 @@ class DecisionButton extends ConsumerWidget {
               print('Data is saving');
               print(
                   '${titleController.text}   ${descriptionController.text}     $category     ${ref.read(dateProvider)}      ${ref.read(timeProvider)}');
+              //=============================================ここから=============================================================================
+              titleController.clear();
+              descriptionController.clear();
+              // ref.read(radioProvider.notifier)
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
