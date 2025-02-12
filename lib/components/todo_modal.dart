@@ -4,6 +4,8 @@ import 'package:flutter_practice/components/decision_button.dart';
 import 'package:flutter_practice/components/radio_button.dart';
 import 'package:flutter_practice/components/textfield_widget.dart';
 import 'package:flutter_practice/components/time_form.dart';
+import 'package:flutter_practice/provider/radio_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 enum TodoType {
@@ -17,21 +19,15 @@ enum TodoType {
   final Color color;
 }
 
-class TodoModal extends StatefulWidget {
+class TodoModal extends ConsumerWidget {
   const TodoModal({super.key});
 
   @override
-  State<TodoModal> createState() => TodoModalState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final titleController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final selectedType = ref.watch(radioProvider);
 
-class TodoModalState extends State<TodoModal> {
-  TodoType? selectedType;
-
-  final titleController = TextEditingController();
-  final descriptionController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       height: MediaQuery.of(context).size.height * 0.8,
@@ -99,11 +95,12 @@ class TodoModalState extends State<TodoModal> {
                             todoType: type,
                             selectedType: selectedType,
                             onChanged: (value) {
-                              setState(() {
-                                selectedType = value;
-                              });
+                              if (value != null) {
+                                ref
+                                    .read(radioProvider.notifier)
+                                    .update((_) => value);
+                              }
                             })),
-                    // Text('繰り返し表示'),
                   }
                 ],
               ),

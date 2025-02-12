@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/components/todo_modal.dart';
 import 'package:flutter_practice/model/model.dart';
 import 'package:flutter_practice/provider/date_time_provider.dart';
 import 'package:flutter_practice/provider/radio_provider.dart';
@@ -66,15 +68,19 @@ class DecisionButton extends ConsumerWidget {
                   description: descriptionController.text,
                   category: category,
                   dateTask: ref.read(dateProvider),
-                  timeTask: ref.read(timeProvider)));
+                  timeTask: ref.read(timeProvider),
+                  isDone: false,
+                  ));
 
               print('Data is saving');
               print(
                   '${titleController.text}   ${descriptionController.text}     $category     ${ref.read(dateProvider)}      ${ref.read(timeProvider)}');
               //=============================================ここから=============================================================================
+              //初期化
               titleController.clear();
               descriptionController.clear();
-              // ref.read(radioProvider.notifier)
+              ref.read(radioProvider.notifier).update((_) => TodoType.learn);
+              Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,

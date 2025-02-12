@@ -3,19 +3,17 @@ import 'package:flutter_practice/components/get_weekday.dart';
 import 'package:flutter_practice/components/profile_icon.dart';
 import 'package:flutter_practice/components/todo_modal.dart';
 import 'package:flutter_practice/components/todo_tile.dart';
+import 'package:flutter_practice/provider/service_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todoData = ref.watch(fetchStreamProvider);
 
-class _MyHomePageState extends State<MyHomePage> {
-  final todos = {0, 1, 2, 4};
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -73,10 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         const Gap(30),
-        for (final todo in todos) ...[
-          const TodoTile(),
-          const Gap(20),
-        ]
+        //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ここのgetIndexどうしよう＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+        const TodoTile(
+          //todoData.value!.lengthとやらは何
+          getIndex: 1,
+        ),
+        const Gap(20),
       ]),
     );
   }

@@ -1,105 +1,112 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice/provider/service_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-class TodoTile extends StatefulWidget {
-  const TodoTile({super.key});
+class TodoTile extends ConsumerWidget {
+  const TodoTile({
+    super.key,
+    required this.getIndex,
+  });
+
+  final int getIndex;
 
   @override
-  State<TodoTile> createState() => _TodoTileState();
-}
-
-class _TodoTileState extends State<TodoTile> {
-  bool isChecked = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 120,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 30,
-            decoration: const BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  topLeft: Radius.circular(20)),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Column(
-                      children: [
-                        Text(
-                          'Learning Web Developer',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          'Learning topic HTML and CSS',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todoData = ref.watch(fetchStreamProvider);
+    return todoData.when(
+        //なにこれ
+        data: (todoData) => Container(
+              margin: const EdgeInsets.symmetric(vertical: 4),
+              width: double.infinity,
+              height: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 30,
+                    decoration: const BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          topLeft: Radius.circular(20)),
                     ),
-                    // const Expanded(child: Spacer()),
-                    Checkbox(
-                        value: isChecked,
-                        shape: const CircleBorder(),
-                        onChanged: (value) {
-                          setState(() {
-                            isChecked = value!;
-                          });
-                        }),
-                  ],
-                ),
-                const Divider(
-                  thickness: 1.5,
-                  color: Colors.grey,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Today",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: Column(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  todoData[getIndex].titleTask,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                Text(
+                                  todoData[getIndex].description,
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            // const Expanded(child: Spacer()),
+                            Checkbox(
+                                value: todoData[getIndex].isDone,
+                                shape: const CircleBorder(),
+                                onChanged: (value) => print(value)),
+                          ],
+                        ),
+                        const Divider(
+                          thickness: 1.5,
+                          color: Colors.grey,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Today",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                            const Gap(16),
+                            Text(
+                              todoData[getIndex].timeTask,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            )
+                          ],
+                        )
+                      ]),
                     ),
-                    Gap(16),
-                    Text(
-                      '09:15PM- 11:45PM',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    )
-                  ],
-                )
-              ]),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+        error: (error, stackTrace) => Center(
+              child: Text(stackTrace.toString()),
+            ),
+        loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ));
   }
 }
