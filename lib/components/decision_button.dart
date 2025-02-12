@@ -71,10 +71,7 @@ class DecisionButton extends ConsumerWidget {
                     isDone: false,
                   ));
 
-              print('Data is saving');
-              print(
-                  '${titleController.text}   ${descriptionController.text}     $category     ${ref.read(dateProvider)}      ${ref.read(timeProvider)}');
-              //=============================================ここから=============================================================================
+//=============================================ここから=============================================================================
               //初期化
               titleController.clear();
               descriptionController.clear();
@@ -82,7 +79,6 @@ class DecisionButton extends ConsumerWidget {
               ref.read(timeProvider.notifier).update((_) => 'dd/mm/yy');
               ref.read(dateProvider.notifier).update((_) => 'hh : mm');
               Navigator.pop(context);
-
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,

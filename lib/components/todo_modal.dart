@@ -20,12 +20,15 @@ enum TodoType {
 }
 
 class TodoModal extends ConsumerWidget {
-  const TodoModal({super.key});
+  TodoModal({super.key})
+      : titleController = TextEditingController(),
+        descriptionController = TextEditingController();
+        
+  final TextEditingController titleController;
+  final TextEditingController descriptionController;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final titleController = TextEditingController();
-    final descriptionController = TextEditingController();
     final selectedType = ref.watch(radioProvider);
 
     return Container(

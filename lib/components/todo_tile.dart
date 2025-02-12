@@ -55,45 +55,41 @@ class TodoTile extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () => ref
-                                .read(serviceProvider)
-                                .deleteTask(todo.docID),
-                            icon: const Icon(CupertinoIcons.delete)),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              todo.titleTask,
-                              maxLines: 1,
-                              style: TextStyle(
-                                decoration: todo.isDone
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
+                    IconButton(
+                        onPressed: () =>
+                            ref.read(serviceProvider).deleteTask(todo.docID),
+                        icon: const Icon(CupertinoIcons.delete)),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            todo.titleTask,
+                            maxLines: 1,
+                            style: TextStyle(
+                              decoration: todo.isDone
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
                             ),
-                            Text(
-                              todo.description,
-                              maxLines: 1,
-                              style: TextStyle(
-                                decoration: todo.isDone
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
+                          ),
+                          Text(
+                            todo.description,
+                            maxLines: 1,
+                            style: TextStyle(
+                              decoration: todo.isDone
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                     // const Expanded(child: Spacer()),
                     Checkbox(

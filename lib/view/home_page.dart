@@ -65,13 +65,12 @@ class MyHomePage extends ConsumerWidget {
                       isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {
-                        return const TodoModal();
+                        return TodoModal();
                       }),
                   child: const Text('+ New Task')),
             ],
           ),
           const Gap(24),
-          
           for (final todo in data) ...{
             TodoTile(
               //todoData.value!.lengthとやらは何

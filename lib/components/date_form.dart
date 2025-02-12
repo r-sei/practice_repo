@@ -27,12 +27,10 @@ class DateForm extends ConsumerWidget {
           children: [
             IconButton(
                 onPressed: () async {
-                  // print("start");
                   final newDate = await showDatePicker(
                       context: context,
                       firstDate: DateTime(2020),
                       lastDate: DateTime(2030));
-                  // print("finished: $date");
                   if (newDate != null) {
                     final dateString = DateFormat('yyyy/MM/dd').format(newDate);
                     ref.read(dateProvider.notifier).update((_) => dateString);
