@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/components/todo_modal.dart';
 import 'package:flutter_practice/model/model.dart';
@@ -64,12 +63,12 @@ class DecisionButton extends ConsumerWidget {
               }
 
               ref.read(serviceProvider).addNewTask(TodoModel(
-                  titleTask: titleController.text,
-                  description: descriptionController.text,
-                  category: category,
-                  dateTask: ref.read(dateProvider),
-                  timeTask: ref.read(timeProvider),
-                  isDone: false,
+                    titleTask: titleController.text,
+                    description: descriptionController.text,
+                    category: category,
+                    dateTask: ref.read(dateProvider),
+                    timeTask: ref.read(timeProvider),
+                    isDone: false,
                   ));
 
               print('Data is saving');
@@ -80,7 +79,10 @@ class DecisionButton extends ConsumerWidget {
               titleController.clear();
               descriptionController.clear();
               ref.read(radioProvider.notifier).update((_) => TodoType.learn);
+              ref.read(timeProvider.notifier).update((_) => 'dd/mm/yy');
+              ref.read(dateProvider.notifier).update((_) => 'hh : mm');
               Navigator.pop(context);
+
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,

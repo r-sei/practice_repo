@@ -24,12 +24,10 @@ class TimeForm extends ConsumerWidget {
           children: [
             IconButton(
                 onPressed: () async {
-                  // print("start");
                   final timeData = await showTimePicker(
                       initialEntryMode: TimePickerEntryMode.dial,
                       context: context,
                       initialTime: TimeOfDay.now());
-                  // print("finished: $date");
                   if (timeData != null) {
                     if (!context.mounted) {
                       return;
