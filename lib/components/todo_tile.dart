@@ -91,7 +91,6 @@ class TodoTile extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    // const Expanded(child: Spacer()),
                     Checkbox(
                         value: todo.isDone,
                         shape: const CircleBorder(),

@@ -20,7 +20,6 @@ class DateForm extends ConsumerWidget {
           ),
         ),
       ),
-      //ここからdate入力フォーム
       Container(
         color: const Color.fromARGB(100, 190, 190, 190),
         child: Row(

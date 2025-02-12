@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TodoModel {
@@ -17,7 +16,7 @@ class TodoModel {
     required this.category,
     required this.dateTask,
     required this.timeTask,
-    required this.isDone, 
+    required this.isDone,
   });
 
   Map<String, dynamic> toMap() {
@@ -46,13 +45,13 @@ class TodoModel {
 
   factory TodoModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> doc) {
     return TodoModel(
-        docID: doc.id,
-        titleTask: doc['titleTask'],
-        description: doc['description'],
-        category: doc['category'],
-        dateTask: doc['dateTask'],
-        timeTask: doc['timeTask'],
-        isDone: doc['isDone'],
-        );
+      docID: doc.id,
+      titleTask: doc['titleTask'],
+      description: doc['description'],
+      category: doc['category'],
+      dateTask: doc['dateTask'],
+      timeTask: doc['timeTask'],
+      isDone: doc['isDone'],
+    );
   }
 }

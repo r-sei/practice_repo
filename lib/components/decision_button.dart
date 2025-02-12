@@ -46,7 +46,6 @@ class DecisionButton extends ConsumerWidget {
         Expanded(
           child: ElevatedButton(
             onPressed: () {
-              //=============================================ここから=============================================================================
               final categoryLabel = ref.read(radioProvider).label;
 
               String category = '';
@@ -71,7 +70,6 @@ class DecisionButton extends ConsumerWidget {
                     isDone: false,
                   ));
 
-//=============================================ここから=============================================================================
               //初期化
               titleController.clear();
               descriptionController.clear();

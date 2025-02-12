@@ -33,7 +33,6 @@ class MyHomePage extends ConsumerWidget {
                   )),
             ],
           ),
-          // const Text("Hello I'm"),
           leading: const ProfileIcon(),
           actions: const [
             IconButton(onPressed: null, icon: Icon(Icons.calendar_month)),
@@ -42,7 +41,6 @@ class MyHomePage extends ConsumerWidget {
         ),
         body: ListView(padding: const EdgeInsets.all(20.0), children: [
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +56,7 @@ class MyHomePage extends ConsumerWidget {
                 ],
               ),
               Expanded(
-                child: Container(), // spacerでもいい
+                child: Container(),
               ),
               ElevatedButton(
                   onPressed: () => showModalBottomSheet(
@@ -73,7 +71,6 @@ class MyHomePage extends ConsumerWidget {
           const Gap(24),
           for (final todo in data) ...{
             TodoTile(
-              //todoData.value!.lengthとやらは何
               todo: todo,
             ),
             const Gap(24),

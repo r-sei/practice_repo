@@ -7,9 +7,7 @@ final serviceProvider = StateProvider<TodoService>((ref) {
   return TodoService();
 });
 
-//なにこれ
 final fetchStreamProvider = StreamProvider<List<TodoModel>>((ref) async* {
-  // await Future.delayed(const Duration(seconds: 3));
   final getData = FirebaseFirestore.instance
       .collection('todoApp')
       .snapshots()
