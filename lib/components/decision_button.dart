@@ -74,8 +74,8 @@ class DecisionButton extends ConsumerWidget {
               titleController.clear();
               descriptionController.clear();
               ref.read(radioProvider.notifier).update((_) => TodoType.learn);
-              ref.read(timeProvider.notifier).update((_) => 'dd/mm/yy');
-              ref.read(dateProvider.notifier).update((_) => 'hh : mm');
+              ref.read(timeProvider.notifier).update((_) => 'hh : mm');
+              ref.read(dateProvider.notifier).update((_) => 'yyyy/mm/dd');
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
