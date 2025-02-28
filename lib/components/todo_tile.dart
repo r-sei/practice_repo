@@ -106,9 +106,9 @@ class TodoTile extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Today",
-                      style: TextStyle(
+                    Text(
+                      todo.dateTask,
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 12,

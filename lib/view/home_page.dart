@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/components/get_weekday.dart';
 import 'package:flutter_practice/components/profile_icon.dart';
+import 'package:flutter_practice/components/sort_button.dart';
 import 'package:flutter_practice/components/todo_modal.dart';
 import 'package:flutter_practice/components/todo_tile.dart';
 import 'package:flutter_practice/provider/service_provider.dart';
@@ -26,7 +27,7 @@ class MyHomePage extends ConsumerWidget {
                     color: Colors.grey,
                     fontSize: 12.0,
                   )),
-              Text("Mohamed Ali",
+              Text("Sei Ryo",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.0,
@@ -69,6 +70,9 @@ class MyHomePage extends ConsumerWidget {
             ],
           ),
           const Gap(24),
+          //=========ここにソートボタン===============
+          const SortButton(),
+
           for (final todo in data) ...{
             TodoTile(
               todo: todo,
