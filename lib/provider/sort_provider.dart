@@ -4,6 +4,7 @@ enum SortType {
   title,
   date,
   category,
+  done,
 }
 
 final sortTypeProvider =

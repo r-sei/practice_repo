@@ -23,6 +23,8 @@ final fetchStreamProvider = StreamProvider<List<TodoModel>>((ref) async* {
       break;
     case SortType.category:
       query = query.orderBy('category', descending: !isAscending);
+    case SortType.done:
+      query = query.orderBy('isDone', descending: !isAscending);
       break;
   }
 

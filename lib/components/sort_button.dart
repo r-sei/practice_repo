@@ -36,6 +36,8 @@ class SortButton extends ConsumerWidget {
             const PopupMenuItem(value: SortType.date, child: Text("Task Date")),
             const PopupMenuItem(
                 value: SortType.category, child: Text("Task Type")),
+            const PopupMenuItem(
+                value: SortType.done, child: Text("Done")),
           ],
         ),
       ],
